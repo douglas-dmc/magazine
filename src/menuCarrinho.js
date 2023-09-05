@@ -1,5 +1,7 @@
 import { catalogo } from "./utilidades"
 
+const idsProdutoCarrinhoComQuantidade = {}
+
 export function abrirCarrinho(){
     document.getElementById("carrinho").classList.add('right-[0px]')
     document.getElementById("carrinho").classList.remove('right-[-360px]')
@@ -19,6 +21,12 @@ export function inicializarCarrinho(){
 }
 
 export function adicionarAoCarrinho(idProduto){
+    idsProdutoCarrinhoComQuantidade[idProduto] = 1
+
+    if (idProduto in idsProdutoCarrinhoComQuantidade){
+        incrementarQuantidadeProduto(idProduto)
+    }
+
     const produto = catalogo.find((p) => p.id === idProduto)
     const containerProdutosCarrinho = document.getElementById("produtos-carrinho")
 
@@ -36,7 +44,28 @@ export function adicionarAoCarrinho(idProduto){
         <p class="text-slate-400 text-xs">Tamanho: M</p>
         <p class="text-green-700 text-lg">R$${produto.preco}</p>
     </div>
+    <div class="flex text-slate-950 items-end absolute bottom-0 right-2 text-lg">
+        <button>-</button>
+        <p id="quantidade-${produto.id}" class="ml-2">${idsProdutoCarrinhoComQuantidade[produto.id]}</p>
+        <button class="ml-2">+</button>
+    </div>
 </article>`
 
 containerProdutosCarrinho.innerHTML += cartaoProdutoCarrinho
+}
+
+export function incrementarQuantidadeProduto(idProduto){
+    incrementarQuantidadeProduto[idProduto]++
+    atualizarInformacaoQuantidade(idProduto)
+    return
+}
+
+export function decrementarQuantidadeProduto(idProduto){
+    decrementarQuantidadeProduto[idProduto]--
+    atualizarInformacaoQuantidade(idProduto)
+    return
+}
+
+export function atualizarInformacaoQuantidade(idProduto){
+    document.getElementById(`quantidade-${idProduto}`).innerText = idsProdutoCarrinhoComQuantidade[idProduto]
 }
