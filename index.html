@@ -13,7 +13,7 @@
             referrerpolicy="no-referrer"
         />
     </head>
-    <body>
+    <body class="bg-stone-200 flex flex-col">
         <section
             class="fixed top-0 right-[0px] bg-indigo-950 h-screen w-[360px] text-slate-200 flex flex-col justify-between duration-200 z-50 border-l border-slate-200 p-5"
             id="carrinho"
@@ -25,42 +25,27 @@
                 </button>
             </div>
             <section id="produtos-carrinho">
-                <article class="flex bg-slate-100 rounded-lg p-1 relative">
-                    <button id="fechar-carrinho" class="absolute top-0 right-2">
-                        <i class="fa-solid fa-circle-xmark text-slate-500 hover:text-slate-800"></i>
-                    </button>
-                    <img
-                        src="./assets/img/product-1.jpg"
-                        alt="Carrinho: produto 1"
-                        class="h-24 rounded-lg"
-                    />
-                    <div class="py-2 flex flex-col justify-between">
-                        <p class="text-slate-900 text-sm">Camisa Larga com Bolsos</p>
-                        <p class="text-slate-400 text-xs">Tamanho: M</p>
-                        <p class="text-green-700 text-lg">R$70</p>
-                    </div>
-                </article>
             </section>
             <p id="preco-total">R$200</p>
             <button class="bg-slate-200 text-slate-900 p-1">
                 Finalizar Compra
             </button>
         </section>
-        <header class="flex justify-between items-end bg-indigo-950 p-2">
+        <header class="flex text-sl justify-between sticky top-0 shadow-xl shadow-slate-400 items-end bg-indigo-950 px-8 py-4 z-10">
             <img
                 class="h-16"
                 src="./assets/logo/hashtag.svg"
                 alt="Logo do Magazine"
             />
             <div class="text-slate-200 flex gap-2 mx-2">
-                <button><i class="fa-solid fa-user"></i></button>
-                <button id="abrir-carrinho">
+                <button class="mx-2"><i class="fa-solid fa-user"></i></button>
+                <button class="mr-2" id="abrir-carrinho">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </button>
             </div>
         </header>
         <main>
-            <section class="flex flex-wrap" id="container-produto"></section>
+            <section class="flex flex-wrap p-10 gap-10 justify-center" id="container-produto"></section>
         </main>
         <script type="module" src="main.js"></script>
     </body>
