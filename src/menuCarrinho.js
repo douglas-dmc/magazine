@@ -28,10 +28,12 @@ export function adicionarAoCarrinho(idProduto) {
 
     idsProdutoCarrinhoComQuantidade[idProduto] = 1
     desenharProdutoNoCarrinho(idProduto)
+    atualizarPrecoCarrinho()
 }
 
 function incrementarQuantidadeProduto(idProduto) {
     idsProdutoCarrinhoComQuantidade[idProduto]++
+    atualizarPrecoCarrinho()
     atualizarInformacaoQuantidade(idProduto)
     return
 }
@@ -42,6 +44,7 @@ function decrementarQuantidadeProduto(idProduto) {
         return
     }
     idsProdutoCarrinhoComQuantidade[idProduto]--
+    atualizarPrecoCarrinho()
     atualizarInformacaoQuantidade(idProduto)
     return
 }
@@ -116,9 +119,19 @@ function renderizarProdutosCarrinho() {
     for (const idProduto in idsProdutoCarrinhoComQuantidade) {
         desenharProdutoNoCarrinho(idProduto)
     }
+    atualizarPrecoCarrinho()
 }
 
 function removerDoCarrinho(idProduto) {
     delete idsProdutoCarrinhoComQuantidade[idProduto]
     renderizarProdutosCarrinho()
+}
+
+function atualizarPrecoCarrinho(){
+    const precoCarrinho = document.getElementById("preco-total")
+    let precoTotalCarrinho = 0
+    for (const idProdutoNoCarrinho in idsProdutoCarrinhoComQuantidade){
+        precoTotalCarrinho += catalogo.find((p) => p.id === idProdutoNoCarrinho).preco * idsProdutoCarrinhoComQuantidade[idProdutoNoCarrinho]
+    }
+    precoCarrinho.innerText = `Total: R$ ${precoTotalCarrinho}`
 }

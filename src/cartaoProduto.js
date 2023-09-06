@@ -7,7 +7,7 @@ export function renderizarCatalogo() {
         <img class="group-hover:scale-110 duration-300 my-3 rounded-lg" src="./assets/img/${produtoCatalogo.imagem}" alt="Produto ${produtoCatalogo.id} do magazine">
         <p class="text-sm">${produtoCatalogo.marca}</p>
         <p class="text-sm">${produtoCatalogo.nome}</p>
-        <p class="text-sm">R$${produtoCatalogo.preco}</p>
+        <p class="text-sm">R$ ${produtoCatalogo.preco}</p>
         <button id="adicionar-${produtoCatalogo.id}" class="bg-slate-950 hover:bg-slate-700 text-slate-200"><i class="fa-solid fa-cart-plus"></i></button>
         </div>`
 
