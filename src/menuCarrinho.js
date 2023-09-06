@@ -98,7 +98,6 @@ function desenharProdutoNoCarrinho(idProduto) {
 
     elementoArticle.innerHTML = cartaoProdutoCarrinho
     containerProdutosCarrinho.appendChild(elementoArticle)
-    // containerProdutosCarrinho.innerHTML += cartaoProdutoCarrinho
 
     document
         .getElementById(`incrementar-produto-${produto.id}`)
