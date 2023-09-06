@@ -1,6 +1,6 @@
-import { catalogo } from "./utilidades"
+import { catalogo, lerLocalStorage, salvarLocalStorage } from "./utilidades"
 
-const idsProdutoCarrinhoComQuantidade = {}
+const idsProdutoCarrinhoComQuantidade = lerLocalStorage("carrinho") ?? {}
 
 export function abrirCarrinho() {
     document.getElementById("carrinho").classList.add("right-[0px]")
@@ -29,11 +29,13 @@ export function adicionarAoCarrinho(idProduto) {
     idsProdutoCarrinhoComQuantidade[idProduto] = 1
     desenharProdutoNoCarrinho(idProduto)
     atualizarPrecoCarrinho()
+    salvarLocalStorage("carrinho", idsProdutoCarrinhoComQuantidade)
 }
 
 function incrementarQuantidadeProduto(idProduto) {
     idsProdutoCarrinhoComQuantidade[idProduto]++
     atualizarPrecoCarrinho()
+    salvarLocalStorage("carrinho", idsProdutoCarrinhoComQuantidade)
     atualizarInformacaoQuantidade(idProduto)
     return
 }
@@ -45,6 +47,7 @@ function decrementarQuantidadeProduto(idProduto) {
     }
     idsProdutoCarrinhoComQuantidade[idProduto]--
     atualizarPrecoCarrinho()
+    salvarLocalStorage("carrinho", idsProdutoCarrinhoComQuantidade)
     atualizarInformacaoQuantidade(idProduto)
     return
 }
@@ -83,7 +86,7 @@ function desenharProdutoNoCarrinho(idProduto) {
     <div class="py-2 flex flex-col justify-between">
         <p class="text-slate-900 text-sm">${produto.nome}</p>
         <p class="text-slate-400 text-xs">Tamanho: M</p>
-        <p class="text-green-700 text-lg">R$${produto.preco}</p>
+        <p class="text-green-700 text-lg">R$ ${produto.preco}</p>
     </div>
     <div class="flex text-slate-950 items-end absolute bottom-0 right-2 text-lg">
         <button id="decrementar-produto-${produto.id}">-</button>
@@ -112,7 +115,7 @@ function desenharProdutoNoCarrinho(idProduto) {
         .addEventListener("click", () => removerDoCarrinho(produto.id))
 }
 
-function renderizarProdutosCarrinho() {
+export function renderizarProdutosCarrinho() {
     const containerProdutosCarrinho =
         document.getElementById("produtos-carrinho")
     containerProdutosCarrinho.innerHTML = ""
@@ -124,10 +127,11 @@ function renderizarProdutosCarrinho() {
 
 function removerDoCarrinho(idProduto) {
     delete idsProdutoCarrinhoComQuantidade[idProduto]
+    salvarLocalStorage("carrinho", idsProdutoCarrinhoComQuantidade)
     renderizarProdutosCarrinho()
 }
 
-function atualizarPrecoCarrinho(){
+export function atualizarPrecoCarrinho(){
     const precoCarrinho = document.getElementById("preco-total")
     let precoTotalCarrinho = 0
     for (const idProdutoNoCarrinho in idsProdutoCarrinhoComQuantidade){
