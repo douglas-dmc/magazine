@@ -114,3 +114,7 @@ export function desenharProdutoNoCarrinhoSimples(
     elementoArticle.innerHTML = cartaoProdutoCarrinho
     containerProdutosCarrinho.appendChild(elementoArticle)
 }
+
+export function apagarDoLocalStorage(chave){
+    localStorage.removeItem(chave)
+}

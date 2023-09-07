@@ -1,4 +1,4 @@
-import { desenharProdutoNoCarrinhoSimples, lerLocalStorage } from "./src/utilidades";
+import { apagarDoLocalStorage, desenharProdutoNoCarrinhoSimples, lerLocalStorage, salvarLocalStorage } from "./src/utilidades";
 
 
 function desenharProdutoCheckout(){
@@ -8,4 +8,30 @@ function desenharProdutoCheckout(){
     }
 }
 
+
+function finalizarCompra(e){
+    e.preventDefault()
+
+    const idsProdutoCarrinhoComQuantidade = lerLocalStorage("carrinho") ?? {}
+    if (Object.keys(idsProdutoCarrinhoComQuantidade).length === 0){
+        return
+    }
+
+    const dataAtual = new Date()
+    const pedidoFeito = {
+        dataPedido: dataAtual,
+        pedido: idsProdutoCarrinhoComQuantidade
+    }
+
+    const historicoDePedidos = lerLocalStorage("historico") ?? []
+    const historicoDePedidosAtualizados = [pedidoFeito, ...historicoDePedidos]
+
+    salvarLocalStorage("historico", historicoDePedidosAtualizados)
+    apagarDoLocalStorage("carrinho")
+    
+    window.location.href = window.location.origin + "/pedidos.html"
+}
+
 desenharProdutoCheckout()
+
+document.addEventListener("submit", (e) => finalizarCompra(e))
