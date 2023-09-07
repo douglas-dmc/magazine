@@ -15,9 +15,11 @@ export function fecharCarrinho() {
 export function inicializarCarrinho() {
     const botaoFecharCarrinho = document.getElementById("fechar-carrinho")
     const botaoAbrirCarrinho = document.getElementById("abrir-carrinho")
+    const botaoIrParaCheckout = document.getElementById("finalizar-compra")
 
     botaoFecharCarrinho.addEventListener("click", fecharCarrinho)
     botaoAbrirCarrinho.addEventListener("click", abrirCarrinho)
+    botaoIrParaCheckout.addEventListener("click", irParaCheckout)
 }
 
 export function adicionarAoCarrinho(idProduto) {
@@ -65,6 +67,7 @@ function desenharProdutoNoCarrinho(idProduto) {
     const elementoArticle = document.createElement("article")
     const articleClasses = [
         "flex",
+        "gap-2",
         "bg-slate-100",
         "rounded-lg",
         "p-1",
@@ -137,4 +140,11 @@ export function atualizarPrecoCarrinho(){
         precoTotalCarrinho += catalogo.find((p) => p.id === idProdutoNoCarrinho).preco * idsProdutoCarrinhoComQuantidade[idProdutoNoCarrinho]
     }
     precoCarrinho.innerText = `Total: R$ ${precoTotalCarrinho}`
+}
+
+function irParaCheckout(){
+    if (Object.keys(idsProdutoCarrinhoComQuantidade).length === 0){
+        return
+    }
+    window.location.href = window.location.origin + "/checkout.html"
 }
