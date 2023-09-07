@@ -1,26 +1,33 @@
-import { apagarDoLocalStorage, desenharProdutoNoCarrinhoSimples, lerLocalStorage, salvarLocalStorage } from "./src/utilidades";
+import {
+    apagarDoLocalStorage,
+    desenharProdutoNoCarrinhoSimples,
+    lerLocalStorage,
+    salvarLocalStorage,
+} from "./src/utilidades"
 
-
-function desenharProdutoCheckout(){
-    const idsProdutoCarrinhoComQuantidade = lerLocalStorage("carrinho")
-    for (const idProduto in idsProdutoCarrinhoComQuantidade){
-        desenharProdutoNoCarrinhoSimples(idProduto, "container-produtos-checkout", idsProdutoCarrinhoComQuantidade[idProduto])
+function desenharProdutoCheckout() {
+    const idsProdutoCarrinhoComQuantidade = lerLocalStorage("carrinho") ?? {}
+    for (const idProduto in idsProdutoCarrinhoComQuantidade) {
+        desenharProdutoNoCarrinhoSimples(
+            idProduto,
+            "container-produtos-checkout",
+            idsProdutoCarrinhoComQuantidade[idProduto]
+        )
     }
 }
 
-
-function finalizarCompra(e){
+function finalizarCompra(e) {
     e.preventDefault()
 
     const idsProdutoCarrinhoComQuantidade = lerLocalStorage("carrinho") ?? {}
-    if (Object.keys(idsProdutoCarrinhoComQuantidade).length === 0){
+    if (Object.keys(idsProdutoCarrinhoComQuantidade).length === 0) {
         return
     }
 
     const dataAtual = new Date()
     const pedidoFeito = {
         dataPedido: dataAtual,
-        pedido: idsProdutoCarrinhoComQuantidade
+        pedido: idsProdutoCarrinhoComQuantidade,
     }
 
     const historicoDePedidos = lerLocalStorage("historico") ?? []
@@ -28,7 +35,7 @@ function finalizarCompra(e){
 
     salvarLocalStorage("historico", historicoDePedidosAtualizados)
     apagarDoLocalStorage("carrinho")
-    
+
     window.location.href = window.location.origin + "/pedidos.html"
 }
 
